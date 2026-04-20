@@ -1,6 +1,18 @@
 let boxes = document.querySelectorAll(".box");
+
+let music = new Audio('music/music.mp3');
+let audioTurn = new Audio('music/ting.mp3');
+let gameover = new Audio('music/gameov.mp3');
+
 let turn = 'X';
 let isgameover = false;
+
+// start background music on first click
+document.addEventListener("click", () => {
+	music.play();
+	music.loop = true;
+	music.volume = 0.3;
+}, { once: true });
 
 // change turn
 const changeTurn = () => {
@@ -28,7 +40,6 @@ const checkWin = () => {
 			boxtext[e[0]].innerText === boxtext[e[1]].innerText &&
 			boxtext[e[1]].innerText === boxtext[e[2]].innerText
 		) {
-
 			boxtext[e[0]].classList.add("win");
 			boxtext[e[1]].classList.add("win");
 			boxtext[e[2]].classList.add("win");
@@ -37,6 +48,8 @@ const checkWin = () => {
 				boxtext[e[0]].innerText + " Won";
 
 			isgameover = true;
+
+			gameover.play();
 
 			document.getElementById("winMessage").innerText =
 				"Player " + boxtext[e[0]].innerText + " Wins!";
@@ -57,6 +70,8 @@ boxes.forEach(box => {
 
 			boxtext.innerText = current;
 			boxtext.classList.add(current === "X" ? "x" : "o");
+
+			audioTurn.play();
 
 			turn = changeTurn();
 			checkWin();
