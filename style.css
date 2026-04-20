@@ -1,0 +1,109 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Arial, sans-serif;
+}
+
+body {
+	background-color: #f1f2f6;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+}
+
+.gameContainer {
+	background: white;
+	padding: 25px;
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+}
+
+.gameInfo h1 {
+	font-size: 22px;
+	color: #2f3542;
+}
+
+.gameInfo-details {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+}
+
+.info {
+	color: #57606f;
+}
+
+#reset {
+	padding: 6px 14px;
+	border: none;
+	background: #3742fa;
+	color: white;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.container {
+	display: grid;
+	grid-template-columns: repeat(3, 90px);
+	grid-template-rows: repeat(3, 90px);
+}
+
+.box {
+	border: 2px solid #2f3542;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 30px;
+	cursor: pointer;
+	background: white;
+}
+
+.box:hover {
+	background: #f1f2f6;
+}
+
+.br-0 { border-right: none; }
+.bl-0 { border-left: none; }
+.bt-0 { border-top: none; }
+.bb-0 { border-bottom: none; }
+
+.x { color: #e84118; }
+.o { color: #3742fa; }
+
+.win {
+	background-color: #ffeaa7;
+	transition: 0.3s;
+}
+
+.modal {
+	display: none;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.4);
+	justify-content: center;
+	align-items: center;
+}
+
+.modal-content {
+	background: white;
+	padding: 20px;
+	border-radius: 6px;
+	text-align: center;
+}
+
+#playAgain {
+	margin-top: 10px;
+	padding: 6px 14px;
+	border: none;
+	background: #3742fa;
+	color: white;
+	cursor: pointer;
+	border-radius: 4px;
+}
