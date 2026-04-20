@@ -6,31 +6,55 @@ let gameover = new Audio('music/gameov.mp3');
 
 let turn = 'X';
 let isgameover = false;
-let isMuted = false;
 
-let muteBtn = document.getElementById("mute");
+/* ---------- Background Music ---------- */
 
-muteBtn.addEventListener("click", () => {
-	isMuted = !isMuted;
-
-	music.muted = isMuted;
-
-	muteBtn.innerText = isMuted ? "Unmute" : "Mute";
-});
-
-// start background music on first click
-document.addEventListener("click", () => {
-	music.play();
+// start on load (may be blocked by browser)
+window.addEventListener("load", () => {
 	music.loop = true;
 	music.volume = 0.3;
+	music.play().catch(() => {});
+});
+
+// fallback: first click
+document.addEventListener("click", () => {
+	music.play().catch(() => {});
 }, { once: true });
 
-// change turn
+// pause/resume when tab changes
+document.addEventListener("visibilitychange", () => {
+	if (document.hidden) {
+		music.pause();
+	} else {
+		if (!isMuted) music.play().catch(() => {});
+	}
+});
+
+/* ---------- Mute Button ---------- */
+
+let isMuted = false;
+let muteBtn = document.getElementById("mute");
+
+if (muteBtn) {
+	muteBtn.addEventListener("click", () => {
+		isMuted = !isMuted;
+
+		music.muted = isMuted;
+		audioTurn.muted = isMuted;
+		gameover.muted = isMuted;
+
+		muteBtn.innerText = isMuted ? "Unmute" : "Mute";
+	});
+}
+
+/* ---------- Turn Change ---------- */
+
 const changeTurn = () => {
 	return turn === 'X' ? 'O' : 'X';
 };
 
-// check win
+/* ---------- Win Check ---------- */
+
 const checkWin = () => {
 	let boxtext = document.getElementsByClassName('boxtext');
 
@@ -51,6 +75,7 @@ const checkWin = () => {
 			boxtext[e[0]].innerText === boxtext[e[1]].innerText &&
 			boxtext[e[1]].innerText === boxtext[e[2]].innerText
 		) {
+			// highlight
 			boxtext[e[0]].classList.add("win");
 			boxtext[e[1]].classList.add("win");
 			boxtext[e[2]].classList.add("win");
@@ -70,7 +95,8 @@ const checkWin = () => {
 	});
 };
 
-// game logic
+/* ---------- Game Logic ---------- */
+
 boxes.forEach(box => {
 	let boxtext = box.querySelector('.boxtext');
 
@@ -96,7 +122,8 @@ boxes.forEach(box => {
 	});
 });
 
-// reset
+/* ---------- Reset ---------- */
+
 document.getElementById("reset").addEventListener("click", () => {
 	let texts = document.querySelectorAll(".boxtext");
 
@@ -112,12 +139,14 @@ document.getElementById("reset").addEventListener("click", () => {
 	document.getElementById("winModal").style.display = "none";
 });
 
-// play again
+/* ---------- Play Again ---------- */
+
 document.getElementById("playAgain").addEventListener("click", () => {
 	document.getElementById("reset").click();
 });
 
-// draw
+/* ---------- Draw ---------- */
+
 const checkDraw = () => {
 	let boxtext = document.getElementsByClassName('boxtext');
 
