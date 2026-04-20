@@ -6,6 +6,17 @@ let gameover = new Audio('music/gameov.mp3');
 
 let turn = 'X';
 let isgameover = false;
+let isMuted = false;
+
+let muteBtn = document.getElementById("mute");
+
+muteBtn.addEventListener("click", () => {
+	isMuted = !isMuted;
+
+	music.muted = isMuted;
+
+	muteBtn.innerText = isMuted ? "Unmute" : "Mute";
+});
 
 // start background music on first click
 document.addEventListener("click", () => {
